@@ -1,0 +1,115 @@
+### Functions ###
+
+# Open up chrome. Pretty straight forward
+chrome () {
+  open -a /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary "$1"
+}
+
+# Change the ownership of a given folder
+# Usage: godmode <option> <target_directory>
+godmode(){
+  option=""
+  target="./"
+  if [ ! -z "${1}" ]; then
+    option="${1}"
+  fi
+  if [ ! -z "${2}" ]; then
+    target="${2}"
+  fi
+
+  sudo chmod 777 ${target} ${option}
+}
+
+# serve - creates a simple webserver and opens the url in Chrome Canary
+# Usage: serve <port>
+# Unless no port is specified then the server starts on port 8000
+serve(){
+  port="8000"
+  if [ ! -z "${1}" ]; then
+    port="${1}"
+  fi
+
+  chrome http://127.0.0.1:${port}
+  python -m SimpleHTTPServer ${port}
+}
+
+# mkmv - creates a new directory and moves the file into it, in 1 step
+# Usage: mkmv <filename> <directory>
+mkmv() {
+  mkdir "$2"
+  mv "$1" "$2"
+}
+
+### Bash Completion ###
+if [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+
+# Commit everything in one line
+# Usage: commit <file_to_commit | -A> <"commit_message">
+commit() {
+  git add $1 && git commit -m $2 && git push
+}
+
+# Extract archives
+# Usage: extract <file>
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjvf $1    ;;
+      *.tar.gz)    tar xzvf $1    ;;
+      *.bz2)       bzip2 -d $1    ;;
+      *.rar)       unrar2dir $1    ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1    ;;
+      *.tgz)       tar xzf $1    ;;
+      *.zip)       unzip2dir $1     ;;
+      *.Z)         uncompress $1    ;;
+      *.7z)        7z x $1    ;;
+      *.ace)       unace x $1    ;;
+      *)           echo "'$1' cannot be extracted via extract()"   ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Back up a file.
+# Usage: bkp <filename>
+bkp () {
+  cp $1 ${1}-`date +%Y%m%d%H%M`.backup;
+  echo '\nFile' ${1}-`date +%Y%m%d%H%M`.backup 'was created';
+}
+
+# Create a directory and go there
+mkcd () {
+  mkdir $@ && cd $@
+}
+
+# Kills any process that matches a regexp passed to it
+kill() {
+  ps aux | grep -v "grep" | grep "$@" | awk '{print $2}' | xargs sudo kill
+}
+
+if [ -z "\${which tree}" ]; then
+  tree () {
+    find $@ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+  }
+fi
+
+# Ionic emulate
+i:emulate () {
+  cordova platform rm $@ &&
+  cordova platform add $@ &&
+  ionic build $@ &&
+  ionic emulate $@
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
