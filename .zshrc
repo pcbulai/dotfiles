@@ -5,11 +5,11 @@ unset file;
 
 # Enlighten me
 
-if [ `which fortune` ]; then
-  echo ""
-  fortune | cowsay
-  echo ""
-fi
+#if [ `which fortune` ]; then
+#  echo ""
+#  fortune | cowsay
+#  echo ""
+#fi
 
 ZSH_THEME="agnoster"
 #ZSH_THEME="robbyrussell"
