@@ -18,9 +18,10 @@ alias ip:local="ifconfig | grep 'inet ' | awk '{ print $2 }'"
 alias ips='ifconfig -a | grep -o "inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)" | awk "{ sub(/inet6? (addr:)? ?/, \"\"); print }"'
 
 # Navigation Aliases
-alias :z="cd ../"
-alias :zz="cd ../../"
-alias :work="cd ~/Projects"
+alias .="cd ../"
+alias ..="cd ../../"
+alias work="cd ~/Projects"
+alias dotfiles="cd ~/Projects/dotfiles"
 
 # OS Aliases
 alias :show="defaults write com.apple.finder AppleShowAllFiles YES && killall Finder"
@@ -36,11 +37,12 @@ alias :df="df -h"
 alias :du="du -h -c"
 
 # Git Aliases
-alias g:p="git pull"
+alias pull="git pull"
 alias g:fuck="git stash && git pull"
-alias g:s="tig"
-alias g:b="git branch"
-alias g:c="git checkout"
+# alias g:s="tig"
+alias branch="git branch"
+alias checkout="git checkout"
+alias merge="git merge"
 alias init="git init"
 
 # Grunt
