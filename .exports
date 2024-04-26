@@ -1,6 +1,4 @@
 export ZSH=$HOME/.oh-my-zsh
-export ANDROID_HOME=/Users/paulbulai/Library/Android/sdk
-export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -18,8 +16,6 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
-
-
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -47,3 +43,7 @@ export MANPAGER='less -X';
 
 ### autocorrects cd misspellings, 'cd /sur/src/linus' >> 'cd /usr/src/linux' ###
 # shopt -s cdspell
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

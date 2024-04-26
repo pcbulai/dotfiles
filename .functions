@@ -5,21 +5,6 @@ chrome () {
   open -a /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary "$1"
 }
 
-# Change the ownership of a given folder
-# Usage: godmode <option> <target_directory>
-godmode(){
-  option=""
-  target="./"
-  if [ ! -z "${1}" ]; then
-    option="${1}"
-  fi
-  if [ ! -z "${2}" ]; then
-    target="${2}"
-  fi
-
-  sudo chmod 777 ${target} ${option}
-}
-
 # serve - creates a simple webserver and opens the url in Chrome Canary
 # Usage: serve <port>
 # Unless no port is specified then the server starts on port 8000
@@ -39,11 +24,6 @@ mkmv() {
   mkdir "$2"
   mv "$1" "$2"
 }
-
-### Bash Completion ###
-if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
 
 # Commit everything in one line
 # Usage: commit <file_to_commit | -A> <"commit_message">
@@ -97,14 +77,6 @@ if [ -z "\${which tree}" ]; then
     find $@ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
   }
 fi
-
-# Ionic emulate
-i:emulate () {
-  cordova platform rm $@ &&
-  cordova platform add $@ &&
-  ionic build $@ &&
-  ionic emulate $@
-}
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into

@@ -2,10 +2,7 @@
 
 # General Aliases
 alias :hi="history"
-alias _="clear"
 alias :x="startx"
-alias :rbt="sudo reboot"
-alias :shd="sudo shutdown -h now"
 alias :q="exit"
 alias :reload="source ~/.zshrc"
 alias reload="exec $SHELL -l"
@@ -21,7 +18,6 @@ alias ips='ifconfig -a | grep -o "inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[
 alias .="cd ../"
 alias ..="cd ../../"
 alias work="cd ~/Projects"
-alias dotfiles="cd ~/Projects/dotfiles"
 
 # OS Aliases
 alias :show="defaults write com.apple.finder AppleShowAllFiles YES && killall Finder"
@@ -43,35 +39,6 @@ alias g:fuck="git stash && git pull"
 alias branch="git branch"
 alias checkout="git checkout"
 alias merge="git merge"
-alias init="git init"
-
-# Grunt
-alias grunt:build="grunt build"
-alias grunt:serve="grunt serve"
-alias grunt:test="grunt test"
-
-# Gulp
-alias :build="gulp build"
-alias :serve="gulp serve"
-alias :test="gulp test"
-
-# Ionic tasks
-alias i:serve="ionic serve"
-alias i:build="ionic build"
-# alias i:emulate="ionic emulate"
-alias i:run="ionic run"
-alias c:prepare="cordova prepare"
-
-# Vagrant Aliases
-alias v:up="vagrant up"
-alias v:halt="vagrant halt"
-alias v:ssh="vagrant ssh"
-
-# Package installation
-alias :hbi="brew install"
-alias :gi="gem install"
-alias :bi="bower install"
-alias :ni="npm install"
 
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
