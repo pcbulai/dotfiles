@@ -2,12 +2,8 @@
 
 # General Aliases
 alias :hi="history"
-alias :x="startx"
 alias :q="exit"
 alias :reload="source ~/.zshrc"
-alias reload="exec $SHELL -l"
-alias ls:all="ls -lAh"
-alias ls:me="ls -lh"
 alias lsd="ls -lF"
 alias lsa="ls -alh"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -33,13 +29,21 @@ alias :df="df -h"
 alias :du="du -h -c"
 
 # Git Aliases
-alias pull="git pull"
-alias g:fuck="git stash && git pull"
-# alias g:s="tig"
-alias branch="git branch"
+alias pull="git pull origin"
 alias checkout="git checkout"
 alias merge="git merge"
+alias stash="git stash"
+alias fetch="git fetch"
+alias git:delete="git branch -D"
+alias git:home="git checkout develop"
+alias git:prune="git branch --merged develop | grep -v '^[ *]*develop$' | xargs git branch -d"
 
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
 alias badge="tput bel"
+alias notify='terminal-notifier -title "Terminal" -message "Done with task!"'
+
+# Utils
+alias edit:aliases="code ~/.aliases"
+alias edit:functions="code ~/.functions"
+alias edit:exports="code ~/.exports"

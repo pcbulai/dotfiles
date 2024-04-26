@@ -1,34 +1,18 @@
 ### Functions ###
 
-# Open up chrome. Pretty straight forward
-chrome () {
-  open -a /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary "$1"
-}
-
-# serve - creates a simple webserver and opens the url in Chrome Canary
-# Usage: serve <port>
-# Unless no port is specified then the server starts on port 8000
-serve(){
-  port="8000"
+# Change the ownership of a given folder
+# Usage: godmode <option> <target_directory>
+godmode(){
+  option=""
+  target="./"
   if [ ! -z "${1}" ]; then
-    port="${1}"
+    option="${1}"
+  fi
+  if [ ! -z "${2}" ]; then
+    target="${2}"
   fi
 
-  chrome http://127.0.0.1:${port}
-  python -m SimpleHTTPServer ${port}
-}
-
-# mkmv - creates a new directory and moves the file into it, in 1 step
-# Usage: mkmv <filename> <directory>
-mkmv() {
-  mkdir "$2"
-  mv "$1" "$2"
-}
-
-# Commit everything in one line
-# Usage: commit <file_to_commit | -A> <"commit_message">
-commit() {
-  git add $1 && git commit -m $2 && git push
+  sudo chmod 777 ${target} ${option}
 }
 
 # Extract archives
@@ -62,6 +46,14 @@ bkp () {
   echo '\nFile' ${1}-`date +%Y%m%d%H%M`.backup 'was created';
 }
 
+# mkmv - creates a new directory and moves the file into it, in 1 step
+# Usage: mkmv <filename> <directory>
+mkmv() {
+  mkdir "$2"
+  mv "$1" "$2"
+}
+
+
 # Create a directory and go there
 mkcd () {
   mkdir $@ && cd $@
@@ -72,16 +64,33 @@ kill() {
   ps aux | grep -v "grep" | grep "$@" | awk '{print $2}' | xargs sudo kill
 }
 
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+
 if [ -z "\${which tree}" ]; then
   tree () {
     find $@ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
   }
 fi
 
-# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
-# the `.git` directory, listing directories first. The output gets piped into
-# `less` with options to preserve color and line numbers, unless the output is
-# small enough for one screen.
-function tre() {
+tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+git:new-branch () {
+  git checkout -b $1/pb/$2;
+  echo 'Happy coding!'
+}
+
+git:push() {
+  currentBranch=$(git rev-parse --abbrev-ref HEAD)
+  git push origin $currentBranch;
+}
+
+git:ammend() {
+  git commit --amend --date="$@" --no-edit && GIT_COMMITTER_DATE="$@" git commit --amend --no-edit
+}
+
